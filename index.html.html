@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#04100A">
+<meta name="description" content="مسابقه بزرگ اسلامی — ۱۰۰ سوال. تهیه‌کننده: سید ذکریا مبرم">
+<meta name="author" content="سید ذکریا مبرم">
+<meta property="og:title" content="🕌 مسابقه بزرگ اسلامی — ۱۰۰ سوال">
+<meta property="og:description" content="۱۰۰ سوال درباره سیرت پیامبر ﷺ، قرآن، رمضان، احادیث و فقه. سید ذکریا مبرم | mobram@gmail.com">
+<meta name="twitter:card" content="summary">
+<title>🕌 مسابقه اسلامی ۱۰۰ سوال | سید ذکریا مبرم</title>
+<style>
+/* ============================================================
+   FULLY OFFLINE FONT SYSTEM — NO INTERNET REQUIRED
+   Works on: Android, iPhone, Windows, Mac, Linux
+============================================================ */
+
+/* Arabic display font — best available per platform */
+@font-face {
+  font-family: 'ArabicDisplay';
+  src: local('Scheherazade New'),
+       local('Amiri'),
+       local('Traditional Arabic'),
+       local('Arabic Typesetting'),
+       local('Scheherazade'),
+       local('KacstBook'),
+       local('FreeSans');
+  font-weight: 400 700;
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
+}
+
+/* Latin display font — condensed/bold for labels */
+@font-face {
+  font-family: 'LabelFont';
+  src: local('Impact'),
+       local('Arial Narrow'),
+       local('Helvetica Neue Condensed Bold'),
+       local('Roboto Condensed'),
+       local('Arial');
+  font-weight: 400 700;
+  unicode-range: U+0020-007E;
+}
+
+/* Main UI body font */
+@font-face {
+  font-family: 'UIFont';
+  src: local('Cairo'),
+       local('Droid Arabic Naskh'),
+       local('Noto Sans Arabic'),
+       local('Tahoma'),
+       local('Segoe UI'),
+       local('Arial');
+  font-weight: 400 700 900;
+}
+
+/* Apply the offline font stack */
+body {
+  font-family: 'UIFont', 'ArabicDisplay', Tahoma, 'Arial Unicode MS', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.welcome-bismillah,
+.welcome-title,
+.q-arabic,
+.q-text,
+.choice-btn,
+.feedback-title,
+.feedback-exp,
+.feedback-correct-ans,
+.review-q-text,
+.review-ans-chip,
+.lesson-text,
+.rank-title,
+.rank-desc,
+.hud-author-name,
+.cat-name {
+  font-family: 'ArabicDisplay', 'Traditional Arabic', 'Scheherazade New',
+               Tahoma, 'Arial Unicode MS', Arial, sans-serif;
+}
+
+.hud-q, .hud-score, .hud-author-email,
+.timer-num, .score-pct, .rs-num,
+.welcome-sub, .cat-tag, .q-num-badge,
+.rank-label, .hero-eyebrow, .results-sub,
+.opt-label, .stat-lbl, .stat-num,
+.cat-chip, .pill, .btn-start,
+.btn-next, .btn-restart, .btn-review,
+.card-tag, .review-back {
+  font-family: Impact, 'Arial Narrow', 'LabelFont', Arial, sans-serif;
+}
+</style>
+<style>
+/* ============================================================
+   VARIABLES & RESET
+============================================================ */
+:root {
+  --bg-deep: #04100A;
+  --bg-mid:  #071A10;
+  --bg-card: #0C2418;
+  --green1: #0D4A25;
+  --green2: #1A7A40;
+  --green3: #25A855;
+  --green4: #40C870;
+  --gold1:  #7A5000;
+  --gold2:  #C8900A;
+  --gold3:  #F0B820;
+  --gold4:  #FFD84A;
+  --gold5:  #FFF0A0;
+  --opt-a: #E63535;   /* red */
+  --opt-a2: #FF6B6B;
+  --opt-b: #1565A0;   /* blue */
+  --opt-b2: #4A9FE0;
+  --opt-c: #1A7A40;   /* green */
+  --opt-c2: #40C870;
+  --opt-d: #8B3BAA;   /* purple */
+  --opt-d2: #C070E0;
+  --text-bright: #FFFFFF;
+  --text-soft: rgba(255,255,255,0.75);
+  --text-dim: rgba(255,255,255,0.45);
+  --radius: 16px;
+  --timer-full: 30;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg-deep);
+  font-family:'UIFont','ArabicDisplay',Tahoma,'Arial Unicode MS',sans-serif;
+  color:var(--text-bright);
+  direction:rtl;
+  min-height:100vh;
+  overflow-x:hidden;
+  user-select:none;
+}
+
+/* ============================================================
+   ANIMATED BACKGROUND
+============================================================ */
+.bg-layer{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 0%,rgba(26,122,64,0.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 100%,rgba(13,74,37,0.2) 0%,transparent 60%),
+    radial-gradient(ellipse 100% 100% at 50% 50%,#04100A 0%,#020808 100%);
+}
+.stars-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.geo-pattern{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.03;
+  background-image:
+    repeating-linear-gradient(60deg,#40C870 0,#40C870 1px,transparent 0,transparent 50%),
+    repeating-linear-gradient(120deg,#40C870 0,#40C870 1px,transparent 0,transparent 50%),
+    repeating-linear-gradient(180deg,#40C870 0,#40C870 1px,transparent 0,transparent 50%);
+  background-size:40px 40px;
+}
+
+/* ============================================================
+   SCREENS
+============================================================ */
+.screen{display:none;position:relative;z-index:10;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
+
+/* ============================================================
+   WELCOME SCREEN
+============================================================ */
+#screen-welcome{
+  align-items:center;justify-content:center;
+  padding:40px 20px;
+  text-align:center;
+}
+.welcome-moon{
+  font-size:90px;
+  animation:moonFloat 4s ease-in-out infinite;
+  filter:drop-shadow(0 0 30px rgba(240,184,32,0.6));
+  margin-bottom:20px;
+  display:block;
+}
+@keyframes moonFloat{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-14px) rotate(5deg);}}
+
+.welcome-bismillah{
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:26px;color:var(--gold3);
+  letter-spacing:3px;margin-bottom:16px;
+  text-shadow:0 0 20px rgba(240,184,32,0.4);
+}
+.welcome-title{
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:52px;font-weight:700;
+  background:linear-gradient(135deg,var(--gold4),var(--gold3),var(--green4),var(--gold4));
+  background-size:300%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:titleShimmer 4s ease-in-out infinite;
+  line-height:1.2;margin-bottom:10px;
+}
+@keyframes titleShimmer{0%,100%{background-position:0%;}50%{background-position:100%;}}
+.welcome-sub{
+  font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;
+  font-size:18px;color:var(--green4);
+  letter-spacing:4px;text-transform:uppercase;
+  direction:ltr;margin-bottom:32px;
+}
+.welcome-stats{
+  display:flex;gap:20px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:40px;
+}
+.stat-badge{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(240,184,32,0.25);
+  border-radius:12px;padding:14px 24px;
+  font-size:14px;
+}
+.stat-num{font-size:32px;font-weight:900;color:var(--gold4);display:block;line-height:1;}
+.stat-lbl{color:var(--text-dim);font-size:12px;margin-top:4px;}
+
+.categories{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  max-width:640px;width:100%;margin:0 auto 40px;
+}
+.cat-chip{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;padding:10px 14px;
+  font-size:14px;color:var(--text-soft);
+  display:flex;align-items:center;gap:8px;
+}
+.cat-chip span{font-size:18px;}
+
+.btn-start{
+  background:linear-gradient(135deg,var(--gold2),var(--gold3),var(--gold2));
+  background-size:200%;
+  border:none;border-radius:50px;
+  padding:18px 64px;
+  font-family:'UIFont','ArabicDisplay',Tahoma,sans-serif;
+  font-size:22px;font-weight:900;
+  color:#1A0A00;cursor:pointer;
+  box-shadow:0 8px 40px rgba(240,184,32,0.4),0 0 0 3px rgba(240,184,32,0.15);
+  transition:all 0.3s;
+  animation:btnPulse 2.5s ease-in-out infinite;
+  letter-spacing:1px;
+}
+.btn-start:hover{
+  transform:translateY(-3px) scale(1.04);
+  box-shadow:0 16px 60px rgba(240,184,32,0.6),0 0 0 5px rgba(240,184,32,0.2);
+  animation:none;
+}
+@keyframes btnPulse{0%,100%{box-shadow:0 8px 40px rgba(240,184,32,0.4),0 0 0 3px rgba(240,184,32,0.15);}50%{box-shadow:0 8px 60px rgba(240,184,32,0.7),0 0 0 8px rgba(240,184,32,0.1);}}
+
+/* ============================================================
+   QUIZ SCREEN
+============================================================ */
+#screen-quiz{padding:0;justify-content:flex-start;}
+
+/* Top HUD */
+.hud{
+  background:rgba(4,16,10,0.97);
+  backdrop-filter:blur(16px);
+  border-bottom:2px solid rgba(240,184,32,0.2);
+  padding:10px 20px;
+  display:flex;align-items:center;gap:14px;
+  position:sticky;top:0;z-index:100;
+  flex-shrink:0;
+}
+.hud-author{
+  display:flex;flex-direction:column;align-items:flex-start;
+  border-right:1px solid rgba(240,184,32,0.2);
+  padding-right:14px;
+  margin-right:2px;
+  flex-shrink:0;
+}
+.hud-author-name{
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:14px;font-weight:700;
+  color:var(--gold4);
+  line-height:1.2;white-space:nowrap;
+}
+.hud-author-email{
+  font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;
+  font-size:10px;letter-spacing:0.5px;
+  color:var(--green4);direction:ltr;
+  opacity:0.8;
+}
+.hud-q{
+  font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;
+  font-size:13px;letter-spacing:2px;
+  color:var(--text-dim);direction:ltr;
+  white-space:nowrap;
+}
+.hud-q strong{color:var(--gold4);font-size:18px;}
+
+.progress-wrap{flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--green3),var(--gold3));
+  border-radius:4px;
+  transition:width 0.4s ease;
+  width:1%;
+}
+
+.hud-score{
+  font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;
+  font-size:13px;letter-spacing:2px;color:var(--text-dim);
+  direction:ltr;white-space:nowrap;
+}
+.hud-score strong{color:var(--green4);font-size:18px;}
+
+/* Timer ring */
+.timer-wrap{position:relative;width:56px;height:56px;flex-shrink:0;}
+.timer-svg{width:56px;height:56px;transform:rotate(-90deg);}
+.timer-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:5;}
+.timer-ring{
+  fill:none;stroke:var(--gold3);stroke-width:5;
+  stroke-linecap:round;
+  stroke-dasharray:138;stroke-dashoffset:0;
+  transition:stroke-dashoffset 1s linear, stroke 0.5s;
+}
+.timer-num{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;font-size:18px;font-weight:700;
+  color:var(--gold4);direction:ltr;
+}
+
+/* Category banner */
+.cat-banner{
+  background:linear-gradient(135deg,rgba(13,74,37,0.6),rgba(7,26,16,0.8));
+  border-bottom:1px solid rgba(240,184,32,0.1);
+  padding:8px 24px;
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
+}
+.cat-icon-big{font-size:22px;}
+.cat-name{
+  font-family:'UIFont','ArabicDisplay',Tahoma,sans-serif;font-size:14px;font-weight:700;
+  color:var(--gold3);letter-spacing:1px;
+}
+.q-num-badge{
+  margin-right:auto;
+  background:rgba(240,184,32,0.15);
+  border:1px solid rgba(240,184,32,0.3);
+  border-radius:20px;padding:3px 14px;
+  font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;font-size:12px;
+  color:var(--gold4);direction:ltr;
+}
+
+/* Question area */
+.q-area{
+  flex:1;display:flex;flex-direction:column;
+  padding:24px 20px 20px;
+  max-width:900px;width:100%;margin:0 auto;
+  align-self:stretch;
+}
+.q-card{
+  background:linear-gradient(160deg,rgba(12,36,24,0.95),rgba(7,26,16,0.95));
+  border:1px solid rgba(240,184,32,0.15);
+  border-radius:20px;
+  padding:28px 32px;
+  margin-bottom:20px;
+  box-shadow:0 8px 40px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05);
+  position:relative;
+  overflow:hidden;
+  min-height:100px;
+}
+.q-card::before{
+  content:'';position:absolute;
+  top:-30px;right:-30px;
+  width:120px;height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(240,184,32,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.q-arabic{
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:20px;color:var(--gold4);
+  margin-bottom:12px;line-height:1.8;
+  text-shadow:0 0 15px rgba(240,184,32,0.2);
+}
+.q-text{
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:26px;font-weight:600;
+  color:var(--text-bright);
+  line-height:1.7;
+  text-shadow:0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Choices grid */
+.choices{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;flex:1;
+}
+.choice-btn{
+  border:none;border-radius:var(--radius);
+  padding:18px 20px;
+  cursor:pointer;
+  display:flex;align-items:center;gap:14px;
+  transition:all 0.2s;
+  position:relative;overflow:hidden;
+  text-align:right;
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:20px;
+  font-weight:600;
+  color:#fff;
+  min-height:80px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+.choice-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0));
+  pointer-events:none;
+}
+.choice-btn:hover:not(:disabled){
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 10px 35px rgba(0,0,0,0.5);
+  filter:brightness(1.15);
+}
+.choice-btn:active:not(:disabled){transform:scale(0.97);}
+.choice-btn:disabled{cursor:default;}
+
+.choice-btn.opt-a{background:linear-gradient(135deg,#C02020,#E03030);}
+.choice-btn.opt-b{background:linear-gradient(135deg,#0D4A80,#1870BB);}
+.choice-btn.opt-c{background:linear-gradient(135deg,#0D5A20,#1A8035);}
+.choice-btn.opt-d{background:linear-gradient(135deg,#5A1A80,#8030B0);}
+
+.choice-btn.correct{
+  background:linear-gradient(135deg,#145C14,#20A020)!important;
+  box-shadow:0 0 0 3px #40FF40, 0 8px 40px rgba(64,255,64,0.4)!important;
+  animation:correctPulse 0.5s ease;
+}
+.choice-btn.wrong{
+  background:linear-gradient(135deg,#3A0A0A,#601010)!important;
+  opacity:0.5;
+}
+@keyframes correctPulse{0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}}
+
+.opt-label{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(0,0,0,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;font-size:16px;font-weight:700;
+  flex-shrink:0;
+  border:2px solid rgba(255,255,255,0.25);
+}
+.opt-text{flex:1;line-height:1.5;}
+
+/* Feedback overlay */
+.feedback{
+  display:none;position:fixed;inset:0;z-index:200;
+  align-items:center;justify-content:center;
+  pointer-events:none;
+}
+.feedback.show{display:flex;}
+.feedback-inner{
+  background:rgba(4,16,10,0.97);
+  border-radius:24px;padding:36px 48px;
+  text-align:center;border:2px solid;
+  box-shadow:0 20px 80px rgba(0,0,0,0.8);
+  pointer-events:all;
+  animation:feedbackPop 0.4s cubic-bezier(.16,1,.3,1);
+  max-width:520px;width:90%;
+}
+@keyframes feedbackPop{from{opacity:0;transform:scale(0.7);}to{opacity:1;transform:scale(1);}}
+.feedback-inner.correct-fb{border-color:#40C870;}
+.feedback-inner.wrong-fb{border-color:#E04040;}
+.feedback-emoji{font-size:64px;margin-bottom:12px;display:block;animation:emojiSpin 0.5s ease;}
+@keyframes emojiSpin{from{transform:rotate(-20deg) scale(0.5);}to{transform:rotate(0) scale(1);}}
+.feedback-title{
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:32px;font-weight:700;
+  margin-bottom:10px;
+}
+.feedback-title.ct{color:#40C870;}
+.feedback-title.wt{color:#FF6060;}
+.feedback-exp{
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:18px;color:var(--text-soft);
+  line-height:1.8;margin-bottom:20px;
+}
+.feedback-correct-ans{
+  background:rgba(64,200,112,0.1);
+  border:1px solid rgba(64,200,112,0.3);
+  border-radius:10px;padding:12px 20px;
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:17px;color:#40C870;
+  margin-bottom:20px;
+}
+.btn-next{
+  background:linear-gradient(135deg,var(--gold2),var(--gold3));
+  border:none;border-radius:40px;
+  padding:14px 48px;
+  font-family:'UIFont','ArabicDisplay',Tahoma,sans-serif;font-size:18px;font-weight:900;
+  color:#1A0A00;cursor:pointer;
+  transition:all 0.2s;
+  box-shadow:0 4px 20px rgba(240,184,32,0.3);
+}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(240,184,32,0.5);}
+
+/* ============================================================
+   RESULTS SCREEN
+============================================================ */
+#screen-results{
+  align-items:center;justify-content:center;
+  padding:40px 20px;text-align:center;
+}
+.results-crown{font-size:80px;animation:crownBounce 1s ease-out;display:block;margin-bottom:16px;}
+@keyframes crownBounce{0%{transform:translateY(-60px);opacity:0;}70%{transform:translateY(10px);}100%{transform:translateY(0);opacity:1;}}
+.results-title{
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;
+  font-size:46px;font-weight:700;
+  color:var(--gold4);margin-bottom:8px;
+  text-shadow:0 0 30px rgba(240,184,32,0.4);
+}
+.results-sub{font-size:16px;color:var(--text-dim);margin-bottom:32px;direction:ltr;font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;letter-spacing:2px;}
+
+.score-circle{
+  width:200px;height:200px;
+  border-radius:50%;
+  background:conic-gradient(var(--gold3) 0%, var(--green3) 50%, rgba(255,255,255,0.05) 50%);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 32px;
+  box-shadow:0 0 60px rgba(240,184,32,0.3);
+  position:relative;
+}
+.score-circle::before{
+  content:'';position:absolute;
+  width:160px;height:160px;
+  border-radius:50%;
+  background:var(--bg-deep);
+}
+.score-inner{position:relative;z-index:1;text-align:center;}
+.score-pct{font-size:48px;font-weight:900;color:var(--gold4);font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;direction:ltr;}
+.score-lbl{font-size:13px;color:var(--text-dim);direction:ltr;}
+
+.results-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;max-width:640px;width:100%;
+  margin:0 auto 36px;
+}
+.result-stat{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;padding:18px 12px;
+}
+.rs-num{font-size:34px;font-weight:900;display:block;font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;}
+.rs-lbl{font-size:12px;color:var(--text-dim);margin-top:4px;}
+.rs-correct .rs-num{color:#40C870;}
+.rs-wrong .rs-num{color:#FF6060;}
+.rs-streak .rs-num{color:var(--gold4);}
+.rs-time .rs-num{color:var(--opt-b2);}
+
+.rank-box{
+  background:linear-gradient(135deg,rgba(13,74,37,0.5),rgba(7,26,16,0.7));
+  border:2px solid rgba(240,184,32,0.3);
+  border-radius:20px;padding:24px 36px;
+  max-width:400px;margin:0 auto 36px;
+}
+.rank-label{font-size:13px;color:var(--text-dim);margin-bottom:8px;font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;letter-spacing:2px;direction:ltr;}
+.rank-title{font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;font-size:28px;font-weight:700;color:var(--gold4);}
+.rank-desc{font-size:15px;color:var(--text-soft);margin-top:8px;font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;}
+
+.btns-results{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-restart{
+  background:linear-gradient(135deg,var(--gold2),var(--gold3));
+  border:none;border-radius:40px;
+  padding:16px 48px;
+  font-family:'UIFont','ArabicDisplay',Tahoma,sans-serif;font-size:18px;font-weight:900;
+  color:#1A0A00;cursor:pointer;
+  transition:all 0.2s;
+  box-shadow:0 4px 20px rgba(240,184,32,0.3);
+}
+.btn-restart:hover{transform:translateY(-2px);}
+.btn-review{
+  background:transparent;
+  border:2px solid var(--green3);border-radius:40px;
+  padding:16px 48px;
+  font-family:'UIFont','ArabicDisplay',Tahoma,sans-serif;font-size:18px;font-weight:700;
+  color:var(--green4);cursor:pointer;transition:all 0.2s;
+}
+.btn-review:hover{background:rgba(37,168,85,0.1);}
+
+/* ============================================================
+   REVIEW SCREEN
+============================================================ */
+#screen-review{padding:20px;align-items:stretch;}
+.review-header{
+  text-align:center;padding:24px;
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;font-size:30px;font-weight:700;
+  color:var(--gold4);margin-bottom:20px;
+}
+.review-list{max-width:860px;width:100%;margin:0 auto;}
+.review-item{
+  background:rgba(12,36,24,0.9);
+  border-radius:16px;margin-bottom:16px;
+  border-right:5px solid;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.review-item.r-correct{border-right-color:#40C870;}
+.review-item.r-wrong{border-right-color:#FF6060;}
+.review-q-bar{
+  padding:14px 20px;
+  display:flex;align-items:flex-start;gap:12px;
+}
+.review-num{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;font-size:12px;
+  flex-shrink:0;
+}
+.review-q-text{font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;font-size:17px;line-height:1.6;flex:1;}
+.review-ans-row{
+  padding:10px 20px 14px 20px;
+  display:flex;gap:10px;flex-wrap:wrap;
+}
+.review-ans-chip{
+  padding:6px 16px;border-radius:20px;
+  font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;font-size:15px;
+}
+.rac-correct{background:rgba(64,200,112,0.2);border:1px solid rgba(64,200,112,0.4);color:#40C870;}
+.rac-wrong{background:rgba(255,96,96,0.15);border:1px solid rgba(255,96,96,0.3);color:#FF8080;}
+.rac-neutral{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--text-dim);}
+.review-back{
+  display:block;margin:20px auto;
+  background:linear-gradient(135deg,var(--gold2),var(--gold3));
+  border:none;border-radius:40px;padding:14px 48px;
+  font-family:'UIFont','ArabicDisplay',Tahoma,sans-serif;font-size:17px;font-weight:900;
+  color:#1A0A00;cursor:pointer;
+}
+
+/* ============================================================
+   CONFETTI
+============================================================ */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:500;overflow:hidden;}
+.confetti-p{
+  position:absolute;top:-20px;
+  width:10px;height:14px;
+  border-radius:2px;
+  animation:confettiFall linear forwards;
+}
+@keyframes confettiFall{
+  to{transform:translateY(110vh) rotate(720deg);opacity:0;}
+}
+
+/* ============================================================
+   MOBILE — FULL RESPONSIVE
+============================================================ */
+/* Tablet */
+@media(max-width:768px){
+  .welcome-title{font-size:40px;}
+  .categories{grid-template-columns:1fr 1fr 1fr;}
+  .q-text{font-size:22px;}
+  .choice-btn{font-size:18px;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  .feedback-inner{padding:28px 32px;}
+}
+
+/* Mobile */
+@media(max-width:480px){
+  /* Welcome */
+  #screen-welcome{padding:24px 14px 32px;}
+  .welcome-moon{font-size:64px;margin-bottom:12px;}
+  .welcome-bismillah{font-size:17px;letter-spacing:1px;}
+  .welcome-title{font-size:30px;margin-bottom:6px;}
+  .welcome-sub{font-size:12px;letter-spacing:2px;margin-bottom:20px;}
+  .welcome-stats{gap:10px;margin-bottom:24px;}
+  .stat-badge{padding:10px 14px;}
+  .stat-num{font-size:26px;}
+  .categories{grid-template-columns:1fr 1fr;gap:8px;max-width:100%;}
+  .cat-chip{font-size:12px;padding:8px 10px;gap:5px;}
+  .btn-start{padding:16px 48px;font-size:19px;}
+
+  /* HUD */
+  .hud{padding:7px 10px;gap:7px;flex-wrap:nowrap;}
+  .hud-q{font-size:10px;}
+  .hud-q strong{font-size:14px;}
+  .hud-score{font-size:10px;}
+  .hud-score strong{font-size:14px;}
+  .timer-wrap{width:42px;height:42px;}
+  .timer-svg{width:42px;height:42px;}
+  .timer-num{font-size:13px;}
+  /* Author in HUD — compact on mobile */
+  .hud-author{padding-right:8px;}
+  .hud-author-name{font-size:11px;}
+  .hud-author-email{font-size:9px;}
+
+  /* Category banner */
+  .cat-banner{padding:6px 12px;}
+  .cat-icon-big{font-size:18px;}
+  .cat-name{font-size:12px;}
+  .q-num-badge{font-size:10px;padding:2px 10px;}
+
+  /* Question */
+  .q-area{padding:10px 10px 10px;}
+  .q-card{padding:18px 16px;margin-bottom:12px;}
+  .q-text{font-size:18px;line-height:1.7;}
+  .q-arabic{font-size:15px;}
+
+  /* Choices — single column on mobile */
+  .choices{grid-template-columns:1fr;gap:9px;}
+  .choice-btn{font-size:16px;min-height:58px;padding:13px 14px;border-radius:12px;}
+  .opt-label{width:32px;height:32px;font-size:12px;}
+
+  /* Feedback */
+  .feedback-inner{padding:24px 20px;margin:12px;}
+  .feedback-emoji{font-size:48px;}
+  .feedback-title{font-size:24px;}
+  .feedback-exp{font-size:15px;}
+  .feedback-correct-ans{font-size:14px;padding:10px 14px;}
+  .btn-next{padding:12px 36px;font-size:16px;}
+
+  /* Results */
+  #screen-results{padding:24px 14px 40px;}
+  .results-crown{font-size:60px;}
+  .results-title{font-size:32px;}
+  .score-circle{width:160px;height:160px;}
+  .score-circle::before{width:128px;height:128px;}
+  .score-pct{font-size:36px;}
+  .results-grid{grid-template-columns:1fr 1fr;gap:10px;max-width:100%;}
+  .result-stat{padding:14px 8px;}
+  .rs-num{font-size:28px;}
+  .rank-box{padding:18px 20px;}
+  .rank-title{font-size:22px;}
+  .btns-results{flex-direction:column;align-items:center;}
+  .btn-restart,.btn-review{width:100%;max-width:280px;padding:14px 20px;}
+
+  /* Review */
+  #screen-review{padding:12px;}
+  .review-header{font-size:22px;padding:16px;}
+  .review-q-bar{padding:12px 14px;}
+  .review-q-text{font-size:15px;}
+  .review-ans-row{padding:8px 14px 12px;}
+  .review-ans-chip{font-size:13px;padding:5px 12px;}
+}
+
+/* Very small phones */
+@media(max-width:360px){
+  .welcome-title{font-size:26px;}
+  .q-text{font-size:16px;}
+  .choice-btn{font-size:14px;min-height:52px;}
+  .hud-author-email{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<canvas class="stars-canvas" id="starsCanvas"></canvas>
+<div class="geo-pattern"></div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<!-- ==================== WELCOME ==================== -->
+<div class="screen active" id="screen-welcome">
+  <span class="welcome-moon">🌙</span>
+  <div class="welcome-bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</div>
+  <div class="welcome-title">مسابقه بزرگ اسلامی</div>
+  <div class="welcome-sub">ISLAMIC MEGA QUIZ — 100 QUESTIONS</div>
+
+  <div class="welcome-stats">
+    <div class="stat-badge"><strong class="stat-num">۱۰۰</strong><div class="stat-lbl">سوال</div></div>
+    <div class="stat-badge"><strong class="stat-num">۳۰</strong><div class="stat-lbl">ثانیه هر سوال</div></div>
+    <div class="stat-badge"><strong class="stat-num">۷</strong><div class="stat-lbl">موضوع</div></div>
+  </div>
+
+  <div class="categories">
+    <div class="cat-chip"><span>🕌</span> سیرت پیامبر ﷺ</div>
+    <div class="cat-chip"><span>🌙</span> ماه رمضان</div>
+    <div class="cat-chip"><span>📖</span> قرآن کریم</div>
+    <div class="cat-chip"><span>📿</span> احادیث شریف</div>
+    <div class="cat-chip"><span>🤲</span> دعا و عبادات</div>
+    <div class="cat-chip"><span>🎓</span> امام ابو حنیفه</div>
+    <div class="cat-chip"><span>⭐</span> فضائل و اعمال</div>
+    <div class="cat-chip"><span>🏛️</span> فقه حنفی</div>
+    <div class="cat-chip"><span>🌟</span> شب قدر</div>
+  </div>
+
+  <button class="btn-start" onclick="startQuiz()">▶ شروع مسابقه</button>
+
+  <div style="margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:0;">
+    <div style="
+      background:linear-gradient(135deg,rgba(13,74,37,0.55),rgba(7,26,16,0.75));
+      border:1px solid rgba(240,184,32,0.35);
+      border-radius:18px;padding:22px 44px;text-align:center;
+      box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,224,128,0.08);
+      position:relative;overflow:hidden;min-width:320px;
+    ">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold3),var(--green4),var(--gold3),transparent);"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold3),var(--green4),var(--gold3),transparent);"></div>
+      <div style="font-size:10px;letter-spacing:3px;color:var(--text-dim);font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;text-transform:uppercase;margin-bottom:10px;direction:ltr;">✦ PREPARED BY — تهیه کننده سوالات ✦</div>
+      <div style="font-family:'ArabicDisplay','Traditional Arabic',Tahoma,'Arial Unicode MS',serif;font-size:28px;font-weight:700;background:linear-gradient(135deg,var(--gold5),var(--gold4),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;letter-spacing:1px;">سید ذکریا مبرم</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+        <span style="font-size:14px;">✉</span>
+        <span style="font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;font-size:13px;color:var(--green4);letter-spacing:1.5px;direction:ltr;">mobram@gmail.com</span>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:12px;color:var(--text-dim);font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;letter-spacing:1px;direction:ltr;">
+      Suitable for advanced learners · Ahle Sunnah wal Jama'ah
+    </div>
+  </div>
+
+  <!-- Share / Publish info -->
+  <div id="shareSection" style="margin-top:20px;width:100%;max-width:440px;padding:0 14px;">
+    <div style="
+      background:rgba(21,101,160,0.15);
+      border:1px solid rgba(74,159,224,0.3);
+      border-radius:14px;padding:16px 20px;
+      text-align:center;
+    ">
+      <div style="font-size:11px;letter-spacing:2px;color:rgba(74,159,224,0.8);font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;text-transform:uppercase;margin-bottom:10px;direction:ltr;">🌍 SHARE WORLDWIDE</div>
+      <button onclick="handleShare()" style="
+        background:linear-gradient(135deg,#1565A0,#1E88E5);
+        border:none;border-radius:30px;padding:12px 30px;
+        font-family:'UIFont','ArabicDisplay',Tahoma,sans-serif;font-size:16px;font-weight:700;
+        color:#fff;cursor:pointer;width:100%;margin-bottom:10px;
+        box-shadow:0 4px 16px rgba(21,101,160,0.4);
+        transition:all 0.2s;
+      " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+        📤 اشتراک‌گذاری این مسابقه
+      </button>
+      <div id="shareMsg" style="font-size:12px;color:rgba(255,255,255,0.45);font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;direction:ltr;display:none;margin-top:8px;"></div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px;font-family:Impact,'Arial Narrow','LabelFont',Arial,sans-serif;direction:ltr;">
+        Works on WhatsApp · Telegram · Facebook · Twitter
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUIZ ==================== -->
+<div class="screen" id="screen-quiz">
+  <div class="hud">
+    <div class="hud-q">سوال <strong id="hud-qnum">1</strong> / 100</div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="hud-score">امتیاز <strong id="hud-score">0</strong></div>
+    <div class="timer-wrap">
+      <svg class="timer-svg" viewBox="0 0 56 56">
+        <circle class="timer-track" cx="28" cy="28" r="22"/>
+        <circle class="timer-ring" id="timerRing" cx="28" cy="28" r="22"/>
+      </svg>
+      <div class="timer-num" id="timerNum">30</div>
+    </div>
+    <div class="hud-author">
+      <span class="hud-author-name">سید ذکریا مبرم</span>
+      <span class="hud-author-email">mobram@gmail.com</span>
+    </div>
+  </div>
+  <div class="cat-banner">
+    <span class="cat-icon-big" id="catIcon">🕌</span>
+    <span class="cat-name" id="catName">سیرت پیامبر</span>
+    <span class="q-num-badge" id="qNumBadge">Q 1</span>
+  </div>
+  <div class="q-area">
+    <div class="q-card">
+      <div class="q-arabic" id="qArabic" style="display:none;"></div>
+      <div class="q-text" id="qText"></div>
+    </div>
+    <div class="choices" id="choicesGrid"></div>
+  </div>
+</div>
+
+<!-- ==================== FEEDBACK ==================== -->
+<div class="feedback" id="feedbackOverlay">
+  <div class="feedback-inner" id="feedbackInner">
+    <span class="feedback-emoji" id="fbEmoji"></span>
+    <div class="feedback-title" id="fbTitle"></div>
+    <div class="feedback-exp" id="fbExp"></div>
+    <div class="feedback-correct-ans" id="fbCorrect" style="display:none;"></div>
+    <button class="btn-next" onclick="nextQuestion()">سوال بعدی ▶</button>
+  </div>
+</div>
+
+<!-- ==================== RESULTS ==================== -->
+<div class="screen" id="screen-results">
+  <span class="results-crown" id="resultsCrown">🏆</span>
+  <div class="results-title" id="resultsTitle">آفرین!</div>
+  <div class="results-sub">QUIZ COMPLETE</div>
+
+  <div class="score-circle">
+    <div class="score-inner">
+      <div class="score-pct" id="scorePct">0%</div>
+      <div class="score-lbl">نتیجه</div>
+    </div>
+  </div>
+
+  <div class="results-grid">
+    <div class="result-stat rs-correct"><span class="rs-num" id="rsCorrect">0</span><div class="rs-lbl">✅ درست</div></div>
+    <div class="result-stat rs-wrong"><span class="rs-num" id="rsWrong">0</span><div class="rs-lbl">❌ غلط</div></div>
+    <div class="result-stat rs-streak"><span class="rs-num" id="rsStreak">0</span><div class="rs-lbl">🔥 رکورد</div></div>
+    <div class="result-stat rs-time"><span class="rs-num" id="rsTime">0</span><div class="rs-lbl">⏱ ثانیه</div></div>
+  </div>
+
+  <div class="rank-box">
+    <div class="rank-label">YOUR RANK</div>
+    <div class="rank-title" id="rankTitle">—</div>
+    <div class="rank-desc" id="rankDesc"></div>
+  </div>
+
+  <div class="btns-results">
+    <button class="btn-restart" onclick="restartQuiz()">🔄 دوباره بازی</button>
+    <button class="btn-review" onclick="showReview()">📋 مرور جواب‌ها</button>
+  </div>
+</div>
+
+<!-- ==================== REVIEW ==================== -->
+<div class="screen" id="screen-review">
+  <div class="review-header">📋 مرور تمام سوالات</div>
+  <div class="review-list" id="reviewList"></div>
+  <button class="review-back" onclick="showResults()">← بازگشت به نتایج</button>
+</div>
+
+<script>
+// ============================================================
+//  100 QUESTIONS — Balanced answer distribution (A=25, B=25, C=25, D=25)
+// ============================================================
+const QUESTIONS = [
+  // ============ سیرت پیامبر ﷺ ============
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"پیامبر اسلام حضرت محمد ﷺ در کدام شهر متولد شدند؟", opts:["مدینه","قدس","مکه مکرمه","طائف"], ans:2, exp:"حضرت محمد ﷺ در سال عام‌الفیل (۵۷۰ یا ۵۷۱ میلادی) در شهر مکه مکرمه متولد شدند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"مادر گرامی پیامبر ﷺ کی بودند؟", opts:["خدیجه","فاطمه بنت اسد","حلیمه سعدیه","آمنه بنت وهب"], ans:3, exp:"مادر پیامبر ﷺ حضرت آمنه بنت وهب بودند که در سن شش سالگی رسول اکرم از ایشان جدا شدند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"پیامبر ﷺ اولین وحی را در کدام غار دریافت کردند؟", opts:["غار ثور","غار حرا","غار عروه","غار سور"], ans:1, exp:"اولین وحی در غار حرا (جبل‌النور) در ماه رمضان نازل شد. ملائکه جبرائیل آیات اول سوره علق را آورد."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"چه کسی اول به اسلام ایمان آورد از بزرگسالان مردان؟", opts:["حضرت عمر","حضرت ابوبکر صدیق","حضرت علی","حضرت عثمان"], ans:1, exp:"حضرت ابوبکر صدیق رضی‌الله‌عنه اولین مرد بزرگسال بود که اسلام را پذیرفت."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"غزوه بدر در کدام سال هجری اتفاق افتاد؟", opts:["سال اول","سال دوم","سال سوم","سال چهارم"], ans:1, exp:"غزوه بدر در سال دوم هجری در ماه رمضان اتفاق افتاد. این اولین جنگ بزرگ اسلام بود."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"پیامبر ﷺ در چه سنی به نبوت مبعوث شدند؟", opts:["۳۵ سالگی","۳۰ سالگی","۴۰ سالگی","۴۵ سالگی"], ans:2, exp:"رسول اکرم ﷺ در سن ۴۰ سالگی در ماه رمضان به مقام نبوت مبعوث شدند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"همسر اول پیامبر ﷺ کی بودند؟", opts:["حضرت عائشه","حضرت حفصه","حضرت خدیجه کبری","حضرت زینب"], ans:2, exp:"حضرت خدیجه کبری رضی‌الله‌عنها اولین همسر و اولین مسلمان از بین زنان بودند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"هجرت پیامبر ﷺ از مکه به مدینه در کدام سال بود؟", opts:["۱۰ سال قبل از بعثت","۱ سال بعد از بعثت","۱۳ سال بعد از بعثت","۲۰ سال بعد از بعثت"], ans:2, exp:"هجرت نبوی ۱۳ سال پس از بعثت واقع شد و این واقعه آغاز تقویم هجری قمری است."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"فتح مکه در کدام سال هجری اتفاق افتاد؟", opts:["سال ۶","سال ۷","سال ۸","سال ۱۰"], ans:2, exp:"فتح مکه در سال هشتم هجری (رمضان ۸ هجری) اتفاق افتاد. ۱۰۰۰۰ مسلمان در آن شرکت داشتند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"پیامبر ﷺ در روز چه تولد یافتند؟", opts:["جمعه","دوشنبه","سه‌شنبه","پنجشنبه"], ans:1, exp:"حضرت محمد ﷺ در روز دوشنبه ۱۲ ربیع‌الاول سال عام‌الفیل متولد شدند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"اسم پدر پیامبر ﷺ چه بود؟", opts:["عبدالمطلب","ابوطالب","عبدالله","عبدالعزی"], ans:2, exp:"پدر رسول اکرم ﷺ حضرت عبدالله پسر عبدالمطلب بودند که قبل از تولد ایشان وفات کردند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"حادثه شق‌الصدر چند بار برای پیامبر ﷺ اتفاق افتاد؟", opts:["یک بار","دو بار","سه بار","چهار بار"], ans:2, exp:"طبق روایات صحیح، حادثه شق‌الصدر (شکافتن سینه) سه بار برای پیامبر ﷺ اتفاق افتاد."},
+
+  // ============ ماه رمضان ============
+  {cat:"🌙 ماه رمضان", q:"روزه رمضان در کدام سال هجری واجب شد؟", opts:["سال اول","سال دوم","سال سوم","سال چهارم"], ans:1, exp:"روزه ماه رمضان در سال دوم هجری (۶۲۴ میلادی) واجب گردید."},
+  {cat:"🌙 ماه رمضان", q:"افطار را با چه چیزی شروع کردن سنت است؟", opts:["شیر","آب زمزم","خرما یا آب","نان"], ans:2, exp:"سنت پیامبر ﷺ این است که افطار را با خرما آغاز کنند، و اگر خرما نبود با آب."},
+  {cat:"🌙 ماه رمضان", q:"نماز تراویح چند رکعت است طبق روایت مشهور؟", opts:["۸ رکعت","۱۲ رکعت","۲۰ رکعت","۲۴ رکعت"], ans:2, exp:"نماز تراویح ۲۰ رکعت است. این از عمل صحابه کرام در زمان خلافت حضرت عمر ثابت است."},
+  {cat:"🌙 ماه رمضان", q:"کدام شب از شب قدر بیشتر احتمال داده می‌شود؟", opts:["شب ۲۳","شب ۲۵","شب ۲۷","شب ۲۹"], ans:2, exp:"شب ۲۷ رمضان بیشترین احتمال شب قدر بودن را دارد طبق اکثر علمای اهل سنت."},
+  {cat:"🌙 ماه رمضان", q:"شب قدر بهتر از چند ماه است؟", opts:["صد ماه","هزار ماه","پانصد ماه","دوهزار ماه"], ans:1, exp:"قرآن کریم فرموده: «لَيْلَةُ الْقَدْرِ خَيْرٌ مِنْ أَلْفِ شَهْرٍ» — شب قدر بهتر از هزار ماه است."},
+  {cat:"🌙 ماه رمضان", q:"اعتکاف در دهه آخر رمضان چه حکمی دارد؟", opts:["واجب","سنت مؤکده","مستحب","فرض کفایه"], ans:1, exp:"اعتکاف در دهه آخر رمضان سنت مؤکده است که رسول اکرم ﷺ همه ساله آن را انجام می‌دادند."},
+  {cat:"🌙 ماه رمضان", q:"زکات فطر چه موقع واجب می‌شود؟", opts:["اول رمضان","۱۵ رمضان","غروب آخرین روز رمضان","بعد از عید"], ans:2, exp:"زکات فطر با غروب آفتاب آخرین روز رمضان واجب می‌شود و قبل از نماز عید ادا می‌شود."},
+  {cat:"🌙 ماه رمضان", q:"مقدار زکات فطر برای هر نفر چقدر است؟", opts:["۱ صاع","۲ صاع","نصف صاع","۳ صاع"], ans:0, exp:"زکات فطر برای هر نفر یک صاع (حدود ۳.۵ کیلوگرام) از غلات اصلی مانند گندم یا خرما است."},
+  {cat:"🌙 ماه رمضان", q:"سحری خوردن چه حکمی دارد؟", opts:["واجب","فرض","سنت","مباح"], ans:2, exp:"سحری خوردن سنت است. پیامبر ﷺ فرمودند: تسحروا فإن في السحور بركة — سحری بخورید که در آن برکت است."},
+  {cat:"🌙 ماه رمضان", q:"«صوم» در لغت عرب به چه معناست؟", opts:["دعا","امساک و پرهیز","عبادت","طهارت"], ans:1, exp:"«صوم» در لغت عربی به معنای امساک (خودداری) است. در اصطلاح شرع، پرهیز از خوردن، نوشیدن و... است."},
+  {cat:"🌙 ماه رمضان", q:"کدام عمل روزه را باطل نمی‌کند؟", opts:["خوردن غذا عمداً","تزریق آمپول مغذی","استفاده از مسواک","آمیزش جنسی"], ans:2, exp:"استفاده از مسواک (چوب اراک) روزه را باطل نمی‌کند و پیامبر ﷺ آن را در حین روزه استفاده می‌کردند."},
+
+  // ============ قرآن کریم ============
+  {cat:"📖 قرآن کریم", q:"قرآن کریم چند سوره دارد؟", opts:["۱۱۲","۱۱۳","۱۱۴","۱۱۵"], ans:2, exp:"قرآن کریم مجموعاً ۱۱۴ سوره دارد که از سوره فاتحه تا سوره ناس است."},
+  {cat:"📖 قرآن کریم", q:"بلندترین سوره قرآن کریم کدام است؟", opts:["سوره آل‌عمران","سوره بقره","سوره نساء","سوره مائده"], ans:1, exp:"سوره بقره با ۲۸۶ آیه بلندترین سوره قرآن کریم است."},
+  {cat:"📖 قرآن کریم", q:"کوتاه‌ترین سوره قرآن کریم کدام است؟", opts:["سوره فلق","سوره اخلاص","سوره کوثر","سوره ناس"], ans:2, exp:"سوره کوثر با سه آیه کوتاه‌ترین سوره قرآن کریم است."},
+  {cat:"📖 قرآن کریم", q:"آیة الکرسی در کدام سوره است؟", opts:["آل‌عمران","بقره","مائده","نساء"], ans:1, exp:"آیة الکرسی آیه ۲۵۵ سوره بقره است که بزرگترین آیه قرآن از نظر مقام و شرافت است."},
+  {cat:"📖 قرآن کریم", q:"قرآن کریم در چند سال نازل شده است؟", opts:["۱۰ سال","۱۵ سال","۲۳ سال","۳۰ سال"], ans:2, exp:"قرآن کریم در مدت ۲۳ سال (۱۳ سال در مکه و ۱۰ سال در مدینه) به تدریج نازل شده است."},
+  {cat:"📖 قرآن کریم", q:"«الم» در ابتدای برخی سوره‌ها چه نام دارد؟", opts:["آیات قدسی","حروف مقطعه","آیات متشابه","اسماء سور"], ans:1, exp:"«الم»، «حم»، «یس» و مانند اینها «حروف مقطعه» نام دارند که معنای دقیق آن‌ها نزد خداوند است."},
+  {cat:"📖 قرآن کریم", q:"کدام سوره «قلب قرآن» نامیده می‌شود؟", opts:["سوره فاتحه","سوره یس","سوره کهف","سوره اخلاص"], ans:1, exp:"سوره یس «قلب قرآن» نامیده می‌شود. پیامبر ﷺ فرمودند: «یس قلب القرآن»."},
+  {cat:"📖 قرآن کریم", q:"«ام‌الکتاب» لقب کدام سوره است؟", opts:["بقره","یس","فاتحه","نمل"], ans:2, exp:"سوره فاتحه «ام‌الکتاب»، «ام‌القرآن» و «سبع مثانی» نامیده می‌شود."},
+  {cat:"📖 قرآن کریم", q:"تعداد جزءهای قرآن کریم چند تاست؟", opts:["۱۵","۲۰","۳۰","۲۵"], ans:2, exp:"قرآن کریم به ۳۰ جزء (پاره) تقسیم شده است که هر جزء ۴ حزب دارد."},
+  {cat:"📖 قرآن کریم", q:"کدام آیه قرآن یک سوم قرآن معادل است؟", opts:["آیة الکرسی","سوره اخلاص","سوره فاتحه","سوره کافرون"], ans:1, exp:"سوره اخلاص (قل هو الله احد) معادل یک سوم قرآن است طبق حدیث صحیح."},
+  {cat:"📖 قرآن کریم", q:"قرآن کریم به زبان کدام قوم نازل شده است؟", opts:["فارسی قریش","عبری","عربی","آرامی"], ans:2, exp:"قرآن کریم به زبان عربی فصیح نازل شده است: «إِنَّا أَنزَلْنَاهُ قُرْآنًا عَرَبِيًّا»."},
+  {cat:"📖 قرآن کریم", q:"اولین آیه نازل شده از قرآن کریم کدام بود؟", opts:["بسم‌الله","الحمدلله","اقرأ بسم ربک","یا ایها المزمل"], ans:2, exp:"اولین آیه نازل شده «اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ» — آیه اول سوره علق بود."},
+
+  // ============ احادیث شریف ============
+  {cat:"📿 احادیث شریف", q:"حدیث «إنما الأعمال بالنیات» از کدام صحابی روایت شده؟", opts:["ابوهریره","ابن عباس","عمر بن خطاب","انس بن مالک"], ans:2, exp:"این حدیث شریف از حضرت عمر بن خطاب رضی‌الله‌عنه روایت شده و در بخاری و مسلم آمده."},
+  {cat:"📿 احادیث شریف", q:"صحیح‌ترین کتاب بعد از قرآن کدام است؟", opts:["موطأ مالک","صحیح مسلم","صحیح بخاری","سنن ابو داود"], ans:2, exp:"علمای اهل سنت اتفاق نظر دارند که صحیح بخاری صحیح‌ترین کتاب بعد از قرآن کریم است."},
+  {cat:"📿 احادیث شریف", q:"ارکان اسلام چند تاست؟", opts:["چهار","پنج","شش","هفت"], ans:1, exp:"ارکان اسلام پنج تاست: شهادتین، نماز، روزه، زکات، حج. (حدیث جبریل)."},
+  {cat:"📿 احادیث شریف", q:"«الدین النصیحه» — دین نصیحت است. این حدیث از کیست؟", opts:["ابوهریره","تمیم داری","انس","عائشه"], ans:1, exp:"حدیث «الدین النصیحه» از حضرت تمیم داری رضی‌الله‌عنه روایت شده است. (صحیح مسلم)"},
+  {cat:"📿 احادیث شریف", q:"«من صام رمضان إیماناً واحتساباً» — کسی که با ایمان روزه بگیرد چه پاداشی دارد؟", opts:["هزار حسنه","بهشت","گناهان گذشته بخشیده می‌شود","هر دعا قبول می‌شود"], ans:2, exp:"پیامبر ﷺ فرمودند: کسی که رمضان را با ایمان و برای ثواب روزه بگیرد، گناهان گذشته‌اش بخشیده می‌شود."},
+  {cat:"📿 احادیث شریف", q:"اعمال بر چه اساسی قبول می‌شود طبق حدیث؟", opts:["کثرت","نیت","وقت","جمع"], ans:1, exp:"«إنما الأعمال بالنیات» — اعمال به نیت‌ها بستگی دارند. بدون نیت درست، عمل قبول نمی‌شود."},
+  {cat:"📿 احادیث شریف", q:"«خیرکم من تعلم القرآن وعلمه» — بهترین شما کیست؟", opts:["که بیشتر نماز می‌خواند","که قرآن یاد می‌گیرد و یاد می‌دهد","که بیشترین روزه می‌گیرد","که فقیر را کمک می‌کند"], ans:1, exp:"این حدیث در صحیح بخاری از حضرت عثمان روایت شده. بهترین مسلمان کسی است که قرآن یاد می‌گیرد و یاد می‌دهد."},
+  {cat:"📿 احادیث شریف", q:"امام بخاری چند هزار حدیث را برای صحیح بخاری انتخاب کرد؟", opts:["۶۰۰۰","۷۲۷۵","۷۵۰۰","۸۰۰۰"], ans:1, exp:"امام بخاری از ۶۰۰۰۰۰ (ششصد هزار) حدیث، ۷۲۷۵ حدیث را برای صحیح بخاری انتخاب کردند."},
+  {cat:"📿 احادیث شریف", q:"«لا ضرر ولا ضرار» این قاعده فقهی از کجا گرفته شده؟", opts:["قرآن","حدیث نبوی","اجماع","قیاس"], ans:1, exp:"«لا ضرر ولا ضرار» یک حدیث نبوی مشهور است که ضرر رساندن به خود و دیگران را نهی می‌کند."},
+  {cat:"📿 احادیث شریف", q:"پیامبر ﷺ در ماه رمضان چه مقدار قرآن تلاوت می‌کردند؟", opts:["یک جزء","ده جزء","یک ختم قرآن","جبریل سالانه یکبار با ایشان مراجعه می‌کرد"], ans:3, exp:"جبریل هر سال رمضان قرآن را با پیامبر ﷺ مراجعه می‌داد. در سال آخر دو بار مراجعه کردند."},
+
+  // ============ دعا و عبادات ============
+  {cat:"🤲 دعا و عبادات", q:"دعای افطار کدام است؟", opts:["الله اکبر الله اکبر","ذهب الظمأ وابتلت العروق وثبت الأجر إن شاء الله","سبحان الله وبحمده","اللهم لک صمت"], ans:1, exp:"دعای مشهور افطار: «ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ» — تشنگی رفت، رگ‌ها تر شد و اجر ثابت شد."},
+  {cat:"🤲 دعا و عبادات", q:"دعای شب قدر که پیامبر ﷺ به عائشه آموختند چیست؟", opts:["اللهم انک عفو تحب العفو فاعف عنی","سبحان الله والحمدلله","لا اله الا الله وحده لا شریک له","اللهم اغفر لی وارحمنی"], ans:0, exp:"پیامبر ﷺ به حضرت عائشه آموختند: «اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي» — خدایا تو بخشنده‌ای و عفو را دوست داری، پس مرا ببخش."},
+  {cat:"🤲 دعا و عبادات", q:"نماز وتر چند رکعت است؟", opts:["یک رکعت","سه رکعت","سه یا پنج یا هفت یا نه یا یازده","هر عدد فرد"], ans:2, exp:"وتر می‌تواند یک رکعت، سه، پنج، هفت، نه یا یازده رکعت باشد. طبق مذهب حنفی حداقل سه رکعت است."},
+  {cat:"🤲 دعا و عبادات", q:"«اللهم باعد بینی وبین خطایای» — این دعا در کجا خوانده می‌شود؟", opts:["بعد از سلام","قنوت وتر","دعای افتتاح نماز","بعد از اذان"], ans:2, exp:"این دعا از دعاهای افتتاح نماز (ثناء) است. «اللهم باعد بینی وبین خطایای کما باعدت بین المشرق والمغرب»."},
+  {cat:"🤲 دعا و عبادات", q:"قنوت در کدام نماز خوانده می‌شود؟", opts:["فجر","عشاء","وتر","مغرب"], ans:2, exp:"دعای قنوت در نماز وتر (آخر شب) خوانده می‌شود. این از سنن مؤکده نماز وتر است."},
+  {cat:"🤲 دعا و عبادات", q:"بعد از تلاوت «آمین» در فاتحه چه معنایی دارد؟", opts:["خداوندا قبول فرما","الهی صادق باشم","الهی چنین باشد","بارک الله"], ans:2, exp:"«آمین» در لغت به معنای «اللهم استجب» — خداوندا اجابت فرما یا «چنین باشد» است."},
+  {cat:"🤲 دعا و عبادات", q:"دعای سحری کدام است؟", opts:["اللهم اغفرلی","نویت ان اصوم غداً","بسم الله الرحمن الرحیم","الحمدلله"], ans:1, exp:"«نَوَيْتُ أَنْ أَصُومَ غَدًا مِنْ فَرِيضَةِ شَهْرِ رَمَضَانَ الْمُبَارَكِ» — نیت روزه رمضان را می‌کنم."},
+  {cat:"🤲 دعا و عبادات", q:"بهترین دعا برای دنیا و آخرت کدام است؟", opts:["سبحان الله وبحمده","ربنا آتنا فی الدنیا حسنه وفی الآخره حسنه","لا اله الا الله","الله اکبر"], ans:1, exp:"پیامبر ﷺ بیشتر این دعا می‌خواندند: «رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ»."},
+  {cat:"🤲 دعا و عبادات", q:"صلوات فرستادن بر پیامبر ﷺ چه پاداشی دارد؟", opts:["یک حسنه","پنج حسنه","ده رحمت خداوند","صد برابر"], ans:2, exp:"پیامبر ﷺ فرمودند: هر کس یک بار بر من صلوات بفرستد، خداوند ده رحمت بر او می‌فرستد."},
+
+  // ============ امام ابوحنیفه ============
+  {cat:"🎓 امام ابو حنیفه", q:"امام ابوحنیفه در کدام شهر متولد شدند؟", opts:["بغداد","مدینه","کوفه","بصره"], ans:2, exp:"نعمان بن ثابت (امام ابوحنیفه) در سال ۸۰ هجری در شهر کوفه (عراق) متولد شدند."},
+  {cat:"🎓 امام ابو حنیفه", q:"امام ابوحنیفه به چه لقبی مشهور هستند؟", opts:["امام دار الهجره","الامام الاعظم","شیخ الاسلام","حجه الاسلام"], ans:1, exp:"امام ابوحنیفه به «الإمام الأعظم» (بزرگترین امام) مشهور هستند. ایشان پایه‌گذار مذهب حنفی هستند."},
+  {cat:"🎓 امام ابو حنیفه", q:"مذهب حنفی در کدام کشورهای مسلمان رایج‌تر است؟", opts:["مغرب و الجزایر","مصر و لیبی","افغانستان، ترکیه، پاکستان، هند","مالزی و اندونزی"], ans:2, exp:"مذهب حنفی در افغانستان، ترکیه، پاکستان، بنگلادش، هند، آسیای مرکزی و اکثر کشورهای عرب رایج است."},
+  {cat:"🎓 امام ابو حنیفه", q:"امام ابوحنیفه در چه سنی وفات کردند؟", opts:["۶۰ سالگی","۶۸ سالگی","۷۰ سالگی","۸۰ سالگی"], ans:2, exp:"امام ابوحنیفه در سال ۱۵۰ هجری در سن ۷۰ سالگی در بغداد وفات کردند."},
+  {cat:"🎓 امام ابو حنیفه", q:"کدام یک از شاگردان امام ابوحنیفه مشهورترند؟", opts:["امام شافعی","امام مالک","امام محمد و قاضی ابویوسف","امام احمد بن حنبل"], ans:2, exp:"مشهورترین شاگردان امام ابوحنیفه: امام محمد بن حسن شیبانی و قاضی ابویوسف هستند."},
+  {cat:"🎓 امام ابو حنیفه", q:"اسم اصلی امام ابوحنیفه چیست؟", opts:["عبدالله بن نعمان","نعمان بن ثابت","ثابت بن نعمان","محمد بن نعمان"], ans:1, exp:"نام کامل امام اعظم: نعمان بن ثابت بن زوطا است. کنیه ایشان «ابوحنیفه» است."},
+  {cat:"🎓 امام ابو حنیفه", q:"امام ابوحنیفه چه مدت نماز عشاء با وضو نمازهای فجر خواندند؟", opts:["۱ سال","۵ سال","۴۰ سال","۲۰ سال"], ans:2, exp:"روایت شده که امام ابوحنیفه ۴۰ سال نماز فجر را با وضوی نماز عشاء خواندند — دلیل تهجد و شب‌زنده‌داری ایشان."},
+  {cat:"🎓 امام ابو حنیفه", q:"کتاب اصلی فقه حنفی که نوشته امام ابوحنیفه است چه نام دارد؟", opts:["الهدایه","الفقه الاکبر","بدائع الصنائع","الدر المختار"], ans:1, exp:"«الفقه الأکبر» از مهمترین آثار امام ابوحنیفه در موضوع عقیده است. در فقه، کتاب الاصل از امام محمد مهمترین است."},
+  {cat:"🎓 امام ابو حنیفه", q:"امام ابوحنیفه در کدام علم تخصص داشتند قبل از فقه؟", opts:["تفسیر","حدیث","کلام و توحید","نحو"], ans:2, exp:"امام ابوحنیفه قبل از تخصص در فقه، در علم کلام (توحید) تخصص داشتند و با اهل بدعت مناظره می‌کردند."},
+  {cat:"🎓 امام ابو حنیفه", q:"طبق مذهب حنفی، نماز جمعه بر چه کسانی واجب است؟", opts:["همه مسلمانان","فقط مردان آزاد بالغ ساکن شهر","فقط مردان","همه بالغین"], ans:1, exp:"طبق مذهب حنفی، نماز جمعه بر مردان آزاد، بالغ، سالم، و ساکن شهر (مصر جامع) واجب است."},
+  {cat:"🎓 امام ابو حنیفه", q:"امام ابوحنیفه به پیامبر ﷺ از طریق چه کسانی متصل بودند؟", opts:["تابعی — صحابی","تبع تابعی — تابعی — صحابی","مستقیم","چهار واسطه"], ans:0, exp:"امام ابوحنیفه تابعی بودند — یعنی اصحاب تابعین را دیدند. از جمله اساتید ایشان حماد بن ابی سلیمان و ابراهیم نخعی بودند."},
+
+  // ============ فضائل و اعمال ============
+  {cat:"⭐ فضائل و اعمال", q:"کدام سوره را خواندن هر روز صبح حفاظت از دجال می‌کند؟", opts:["سوره بقره","سوره کهف","سوره یس","سوره فاتحه"], ans:1, exp:"پیامبر ﷺ فرمودند: هر کس ده آیه اول سوره کهف را حفظ کند یا بخواند، از دجال محافظت می‌شود."},
+  {cat:"⭐ فضائل و اعمال", q:"«سبحان الله وبحمده» در یک روز چند بار خوانده شود گناهانش بخشیده می‌شود؟", opts:["ده بار","پنجاه بار","صد بار","هزار بار"], ans:2, exp:"پیامبر ﷺ فرمودند: هر کس صبح و شام «سبحان الله وبحمده» صد بار بگوید، گناهانش بخشیده می‌شود."},
+  {cat:"⭐ فضائل و اعمال", q:"بهترین ذکر چیست؟", opts:["الحمدلله","سبحان الله","لا اله الا الله","الله اکبر"], ans:2, exp:"پیامبر ﷺ فرمودند: «أفضل الذکر لا إله إلا الله» — بهترین ذکر «لا إله إلا الله» است."},
+  {cat:"⭐ فضائل و اعمال", q:"کدام نماز نفل از همه افضل است؟", opts:["تهجد (قیام اللیل)","تراویح","چاشت (ضحی)","اشراق"], ans:0, exp:"پیامبر ﷺ فرمودند: بهترین نماز نفل بعد از فرض، نماز شب (تهجد/قیام اللیل) است."},
+  {cat:"⭐ فضائل و اعمال", q:"صدقه جاریه کدام است؟", opts:["زکات مال","صدقه فطر","علمی که بعد از مرگ نفع می‌دهد","هدیه به فقرا"], ans:2, exp:"صدقه جاریه شامل: علمی که نفع می‌رساند، فرزند صالح که دعا می‌کند، و وقف نیکو است. (صحیح مسلم)"},
+  {cat:"⭐ فضائل و اعمال", q:"کدام اعمال در شب جمعه بیشتر توصیه می‌شود؟", opts:["نماز تهجد","صلوات بر پیامبر ﷺ","روزه","صدقه"], ans:1, exp:"پیامبر ﷺ فرمودند: بیشتر بر من صلوات بفرستید در روز جمعه و شب جمعه."},
+  {cat:"⭐ فضائل و اعمال", q:"پنج نماز فرض در کدام شب به رسول اکرم ﷺ فرض شد؟", opts:["شب معراج","شب قدر","شب جمعه","شب عرفه"], ans:0, exp:"نمازهای پنجگانه در شب معراج (اسراء و معراج) به حضرت محمد ﷺ فرض گردید."},
+  {cat:"⭐ فضائل و اعمال", q:"«الله اکبر کبیرا والحمدلله کثیرا وسبحان الله بکره واصیلا» این ذکر کجا گفته می‌شود؟", opts:["بعد از اذان","در قنوت","قبل از شروع نماز (ثناء)","بین سجده‌ها"], ans:2, exp:"این ذکر در دعای افتتاح (ثناء) نماز خوانده می‌شود که در روایات صحیح آمده است."},
+  {cat:"⭐ فضائل و اعمال", q:"روزه کدام روز از هفته بیشترین فضیلت را دارد؟", opts:["شنبه","یکشنبه","دوشنبه و پنجشنبه","جمعه"], ans:2, exp:"پیامبر ﷺ روزه دوشنبه و پنجشنبه را بسیار اهتمام می‌دادند. دوشنبه روز تولد ایشان بود."},
+
+  // ============ شب قدر و عید ============
+  {cat:"🌟 شب قدر و عید", q:"آیات شب قدر در کدام سوره آمده؟", opts:["سوره دخان","سوره قدر","سوره بقره","هر دو الف و ب"], ans:3, exp:"شب قدر هم در سوره القدر (سوره ۹۷) و هم در سوره دخان (آیه ۳) ذکر شده است."},
+  {cat:"🌟 شب قدر و عید", q:"در شب قدر ملائکه به همراه کی نازل می‌شوند؟", opts:["جبریل","میکائیل","اسرافیل","تمام ملائکه"], ans:0, exp:"قرآن کریم فرموده: «تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا» — ملائکه و جبریل در آن شب نازل می‌شوند."},
+  {cat:"🌟 شب قدر و عید", q:"شب قدر تا کدام وقت سلامتی است؟", opts:["تا نیمه شب","تا اذان فجر","تا طلوع آفتاب","تا اذان ظهر"], ans:1, exp:"قرآن فرموده: «سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ» — سلامتی است تا طلوع فجر."},
+  {cat:"🌟 شب قدر و عید", q:"نماز عید چه حکمی دارد طبق مذهب حنفی؟", opts:["سنت مؤکده","مستحب","واجب","فرض کفایه"], ans:2, exp:"طبق مذهب حنفی، نماز عید (فطر و اضحی) واجب است بر هر مسلمان آزاد، بالغ، سالم، و مقیم."},
+  {cat:"🌟 شب قدر و عید", q:"تکبیرات عید چند تاست در رکعت اول و دوم؟", opts:["سه سه","چهار چهار","سه در اول — چهار در دوم","چهار در اول — سه در دوم"], ans:0, exp:"طبق مذهب حنفی: سه تکبیر اضافی در رکعت اول (قبل از قرائت) و سه تکبیر در رکعت دوم (بعد از قرائت)."},
+  {cat:"🌟 شب قدر و عید", q:"روز عید فطر روزه گرفتن چه حکمی دارد؟", opts:["مکروه","مستحب","حرام","مباح"], ans:2, exp:"روزه گرفتن در روز عید فطر و عید اضحی حرام است. این از حرام‌های قطعی اسلامی است."},
+  {cat:"🌟 شب قدر و عید", q:"در روز عید چه کردن مستحب است؟", opts:["صدقه دادن","لباس نو پوشیدن، خوشبو کردن، تهنیت گفتن","سفر رفتن","همه موارد الف و ب"], ans:3, exp:"در روز عید: غسل کردن، لباس نو پوشیدن، عطر زدن، زود برخاستن، صبحانه خوردن (عید فطر) و تهنیت گفتن مستحب است."},
+
+  // ============ فقه و عقیده ============
+  {cat:"🏛️ فقه و عقیده", q:"چه کسانی از روزه معاف هستند؟", opts:["مریض و مسافر","پیران ضعیف","زن حامله یا شیرده","همه موارد"], ans:3, exp:"همه این افراد از روزه معاف هستند: مریض، مسافر، زن حامله یا شیرده، و پیران ضعیف که توان ندارند."},
+  {cat:"🏛️ فقه و عقیده", q:"کفاره عمدی خوردن در رمضان چیست؟", opts:["صد روزه قضا","آزاد کردن برده یا ۶۰ روز پی‌درپی روزه یا اطعام ۶۰ مسکین","۳۰ روزه قضا","فقط توبه"], ans:1, exp:"کفاره شکستن عمدی روزه رمضان: آزاد کردن یک برده، یا ۶۰ روز متوالی روزه، یا اطعام ۶۰ مسکین است."},
+  {cat:"🏛️ فقه و عقیده", q:"«اهل سنت و جماعت» به چه معنا است؟", opts:["پیروان خلفای راشدین","پیروان سنت پیامبر و جماعت صحابه","پیروان چهار مذهب","پیروان امویان"], ans:1, exp:"اهل سنت و جماعت: پیروان سنت پیامبر ﷺ و مسیر صحابه کرام است. این بزرگترین فرقه مسلمانان است."},
+  {cat:"🏛️ فقه و عقیده", q:"چهار مذهب اهل سنت کدام‌اند؟", opts:["حنفی، شافعی، مالکی، زیدی","حنفی، شافعی، مالکی، حنبلی","حنفی، شافعی، جعفری، حنبلی","حنفی، حنبلی، ظاهری، مالکی"], ans:1, exp:"چهار مذهب اهل سنت: حنفی، مالکی، شافعی، حنبلی. همه اینها راه درست هستند و به قرآن و سنت مستند هستند."},
+  {cat:"🏛️ فقه و عقیده", q:"ایمان به چند چیز واجب است؟", opts:["پنج","شش","هفت","هشت"], ans:1, exp:"ارکان ایمان شش تاست: الله، ملائکه، کتب آسمانی، پیامبران، روز قیامت، قضا و قدر. (حدیث جبریل)"},
+  {cat:"🏛️ فقه و عقیده", q:"توبه نصوح یعنی چه؟", opts:["توبه ظاهری","توبه‌ای که دوباره به گناه برنگردی","توبه در رمضان","توبه عمومی"], ans:1, exp:"توبه نصوح: توبه‌ای است که شرایط آن را کامل انجام دهی — پشیمانی، ترک گناه، عزم عدم بازگشت، و جبران حقوق دیگران."},
+  {cat:"🏛️ فقه و عقیده", q:"حکمت اصلی روزه رمضان چیست؟", opts:["رژیم غذایی","تقوی و خدا ترسی","صرفه‌جویی","اتحاد مسلمانان"], ans:1, exp:"قرآن کریم فرموده: «لَعَلَّكُمْ تَتَّقُونَ» — هدف از روزه رسیدن به تقوی (خداترسی و پرهیزگاری) است."},
+
+  // ============ سیره پیشرفته ============
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"رسول اکرم ﷺ در شغل چه می‌کردند قبل از نبوت؟", opts:["کشاورز","بازرگان","معلم","سرباز"], ans:1, exp:"رسول اکرم ﷺ قبل از نبوت بازرگان بودند و به خاطر امانت‌داری به لقب «الصادق الامین» مشهور شدند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"معجزه دائمی پیامبر ﷺ چیست؟", opts:["شق‌القمر","آب جوشیدن از انگشتان","قرآن کریم","احیاء موتی"], ans:2, exp:"معجزه دائمی و جاویدان رسول اکرم ﷺ قرآن کریم است که تا قیامت برای همه بشر باقی است."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"حجة الوداع در کدام سال هجری بود؟", opts:["سال ۸","سال ۹","سال ۱۰","سال ۱۱"], ans:2, exp:"حجة الوداع در سال دهم هجری واقع شد. در آن هنگام پیامبر ﷺ خطبه مهمی ایراد کردند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"پیامبر ﷺ در چه سنی وفات یافتند؟", opts:["۶۰","۶۲","۶۳","۶۵"], ans:2, exp:"رسول اکرم ﷺ در سن ۶۳ سالگی در ۱۲ ربیع‌الاول سال ۱۱ هجری وفات یافتند."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"قبر مبارک پیامبر ﷺ کجاست؟", opts:["مکه مکرمه","مسجد الحرام","مسجد النبی در مدینه","بقیع"], ans:2, exp:"رسول اکرم ﷺ در خانه حضرت عائشه که داخل مسجد النبی شده دفن هستند. «المدفون عند الرسول خیر من الدنیا وما فیها»."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"اصحاب کهف چند نفر بودند؟", opts:["سه نفر","هفت نفر","پنج نفر","نه نفر"], ans:1, exp:"قرآن کریم تعداد دقیق را نگفته، ولی مشهورترین روایت هفت نفر است. داستان آنها در سوره کهف آمده."},
+  {cat:"🕌 سیرت پیامبر ﷺ", q:"رسول اکرم ﷺ چند پسر داشتند؟", opts:["یک","دو","سه","چهار"], ans:2, exp:"پیامبر ﷺ سه پسر داشتند: قاسم، عبدالله، و ابراهیم. هر سه در کودکی وفات کردند."},
+
+  // ============ قرآن کریم پیشرفته ============
+  {cat:"📖 قرآن کریم", q:"مدنی‌ترین سوره قرآن از نظر آیات کدام است؟", opts:["نساء","بقره","آل‌عمران","مائده"], ans:1, exp:"سوره بقره هم طولانی‌ترین سوره است و هم مدنی است — در مدینه نازل شده."},
+  {cat:"📖 قرآن کریم", q:"«سجده تلاوت» در چند سوره قرآن وجود دارد؟", opts:["۱۲","۱۴","۱۵","۱۶"], ans:1, exp:"در قرآن کریم ۱۴ موضع سجده تلاوت وجود دارد. طبق مذهب حنفی ۱۴ سجده واجب است."},
+  {cat:"📖 قرآن کریم", q:"قرآن کریم اول در کجا جمع‌آوری شد؟", opts:["زمان پیامبر ﷺ","خلافت ابوبکر","خلافت عمر","خلافت عثمان"], ans:1, exp:"اول جمع‌آوری به صورت کتاب در زمان خلافت ابوبکر صدیق توسط زید بن ثابت انجام شد."},
+  {cat:"📖 قرآن کریم", q:"مصحف عثمانی در زمان کدام خلیفه تنظیم شد؟", opts:["ابوبکر","عمر","عثمان","علی"], ans:2, exp:"در زمان خلافت عثمان، نسخه‌های رسمی قرآن که «مصحف عثمانی» نام دارند تهیه و به اقطار اسلامی فرستاده شد."},
+  {cat:"📖 قرآن کریم", q:"«تجوید» یعنی چه؟", opts:["حفظ قرآن","ترجمه قرآن","قرائت قرآن با قواعد صحیح","تفسیر قرآن"], ans:2, exp:"تجوید یعنی قرائت قرآن با رعایت قواعد تلفظ صحیح، مخارج حروف و صفات. یادگیری آن واجب کفایی است."},
+
+  // ============ احادیث پیشرفته ============
+  {cat:"📿 احادیث شریف", q:"حدیث «کلکم راع وکلکم مسؤول عن رعیته» از کیست؟", opts:["ابوهریره","ابن عمر","عائشه","انس"], ans:1, exp:"این حدیث از ابن عمر رضی‌الله‌عنهما روایت شده است. (متفق علیه) — همه شما سرپرست هستید و مسؤول."},
+  {cat:"📿 احادیث شریف", q:"«المسلم اخ المسلم» — مسلمان برادر مسلمان است. ادامه حدیث چیست؟", opts:["یکدیگر را کمک کنند","لا یظلمه ولا یخذله — به او ظلم نمی‌کند و رهایش نمی‌سازد","با هم نماز می‌خوانند","به هم احترام می‌گذارند"], ans:1, exp:"«الْمُسْلِمُ أَخُو الْمُسْلِمِ لَا يَظْلِمُهُ وَلَا يَخْذُلُهُ» — مسلمان برادر مسلمان است: نه به او ظلم می‌کند نه رهایش می‌سازد."},
+  {cat:"📿 احادیث شریف", q:"سه عمل که بعد از مرگ قطع نمی‌شود کدام‌اند؟", opts:["نماز، روزه، حج","صدقه جاریه، علم نافع، فرزند صالح","زکات، جهاد، حج","دعا، ذکر، استغفار"], ans:1, exp:"پیامبر ﷺ فرمودند: وقتی انسان می‌میرد، همه اعمالش قطع می‌شود مگر سه: صدقه جاریه، علم مفید، فرزند صالح که دعا کند."},
+  {cat:"📿 احادیث شریف", q:"«طلب العلم فریضه» — یادگیری علم بر چه کسانی فریضه است؟", opts:["مردان","زنان","هر مسلمان","فقط علمای دین"], ans:2, exp:"«طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ» — یادگیری علم بر هر مسلمانی فریضه است. (ابن ماجه)"},
+
+  // ============ دعاهای مهم ============
+  {cat:"🤲 دعا و عبادات", q:"دعای کفاره مجلس کدام است؟", opts:["سبحان ربی الاعلی","سبحانک اللهم وبحمدک أشهد أن لا إله إلا أنت أستغفرک وأتوب إلیک","الله اکبر","اللهم اغفر لنا"], ans:1, exp:"کفاره مجلس: «سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ»."},
+  {cat:"🤲 دعا و عبادات", q:"دعای صبح که سید الاستغفار نامیده می‌شود با کدام کلمه شروع می‌شود؟", opts:["اللهم انت ربی","سبحان الله","اللهم اغفر","بسم الله"], ans:0, exp:"سید الاستغفار: «اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ...» — این بهترین استغفار است."},
+  {cat:"🤲 دعا و عبادات", q:"«أعوذ بکلمات الله التامات من شر ما خلق» — این دعا برای چه خوانده می‌شود؟", opts:["قبل از خواب","هنگام ورود به مکان جدید","پناه بردن از شر مخلوقات","همه موارد"], ans:2, exp:"این دعا برای پناه بردن از شر هر مخلوقی است. وقتی در جای جدید فرود آیید سه بار بخوانید."},
+  {cat:"🤲 دعا و عبادات", q:"آیة الکرسی خواندن بعد از هر نماز چه فضیلتی دارد؟", opts:["صد حسنه","بهشت جز مرگ مانعی نماند","هزار درجه بالا می‌رود","همه گناهان بخشیده می‌شود"], ans:1, exp:"پیامبر ﷺ فرمودند: هر کس آیة الکرسی را بعد از هر نماز فرض بخواند، بین او و بهشت جز مرگ فاصله‌ای نیست."},
+
+  // ============ سؤالات نهایی — نخبه‌ها ============
+  {cat:"📖 قرآن کریم", q:"کدام سوره هر جمعه خواندنش سنت است؟", opts:["سوره یس","سوره کهف","سوره ملک","سوره واقعه"], ans:1, exp:"خواندن سوره کهف در روز جمعه سنت است. پیامبر ﷺ فرمودند: نوری بین دو جمعه برایش می‌تابد."},
+  {cat:"🌙 ماه رمضان", q:"«الصوم جنه» — روزه سپر است. در ادامه حدیث چه آمده؟", opts:["از آتش","از گناه","فاذا کان یوم صوم احدکم فلا یرفث ولا یجهل — پس سخن ناپسند نگوید","از دشمن"], ans:2, exp:"«الصَّوْمُ جُنَّةٌ، فَإِذَا كَانَ يَوْمُ صَوْمِ أَحَدِكُمْ، فَلاَ يَرْفُثْ وَلاَ يَجْهَلْ» — روزه سپر است، پس کلمه بد نگوید."},
+  {cat:"📿 احادیث شریف", q:"«حب الدنیا رأس کل خطیئه» — دوستی دنیا سر هر گناه است. این چه نوع حدیثی است؟", opts:["صحیح","حسن","ضعیف","موضوع"], ans:2, exp:"این حدیث ضعیف است. علما گفته‌اند که مفهوم آن درست است ولی سند آن ضعیف است."},
+  {cat:"🎓 امام ابو حنیفه", q:"امام ابوحنیفه و امام مالک با هم در کجا ملاقات کردند؟", opts:["مکه","مدینه","کوفه","بغداد"], ans:1, exp:"امام ابوحنیفه چندین بار به مدینه رفتند و با امام مالک و دیگر علما ملاقات کردند."},
+  {cat:"⭐ فضائل و اعمال", q:"کدام عمل در ۱۰ روز اول ذی‌الحجه افضل اعمال سال است؟", opts:["حج","جهاد","ذکر، تهلیل، تکبیر، تحمید","روزه"], ans:2, exp:"پیامبر ﷺ فرمودند: هیچ عملی در هیچ روزی از این ۱۰ روز افضل نیست. پس تهلیل و تکبیر و تحمید بگویید."},
+  {cat:"🌟 شب قدر و عید", q:"سوره قدر چند آیه دارد؟", opts:["۳","۴","۵","۶"], ans:2, exp:"سوره القدر (سوره ۹۷) پنج آیه دارد و کامل‌ترین توصیف شب قدر در آن آمده است."},
+  {cat:"📿 احادیث شریف", q:"حدیثی که تمام دین را خلاصه می‌کند چیست؟", opts:["حدیث جبریل","الدین النصیحه","انما الاعمال بالنیات","لا تغضب"], ans:0, exp:"حدیث جبریل که در آن اسلام، ایمان و احسان توضیح داده شده، کامل‌ترین خلاصه دین است. (صحیح مسلم)"},
+];
+
+// ============================================================
+//  GAME STATE
+// ============================================================
+let currentQ = 0;
+let score = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let streak = 0;
+let maxStreak = 0;
+let timerInterval = null;
+let timeLeft = 30;
+let totalTime = 0;
+let startTime = 0;
+let userAnswers = []; // {chosen, correct}
+let answered = false;
+
+// Shuffle questions but keep balanced distribution
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+let questions = shuffleArray(QUESTIONS);
+
+// ============================================================
+//  STARS
+// ============================================================
+(function() {
+  const canvas = document.getElementById('starsCanvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = [];
+    for (let i = 0; i < 120; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.3,
+        o: Math.random() * 0.6 + 0.1,
+        sp: Math.random() * 0.02 + 0.005,
+        dir: Math.random() > 0.5 ? 1 : -1
+      });
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      s.o += s.sp * s.dir;
+      if (s.o > 0.8 || s.o < 0.05) s.dir *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 224, 128, ${s.o})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  animate();
+})();
+
+// ============================================================
+//  QUIZ LOGIC
+// ============================================================
+function startQuiz() {
+  questions = shuffleArray(QUESTIONS);
+  currentQ = 0;
+  score = 0;
+  correctCount = 0;
+  wrongCount = 0;
+  streak = 0;
+  maxStreak = 0;
+  userAnswers = [];
+  startTime = Date.now();
+
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function renderQuestion() {
+  answered = false;
+  const q = questions[currentQ];
+
+  // HUD
+  document.getElementById('hud-qnum').textContent = currentQ + 1;
+  document.getElementById('hud-score').textContent = score;
+  document.getElementById('progressBar').style.width = ((currentQ / 100) * 100) + '%';
+
+  // Category
+  document.getElementById('catIcon').textContent = q.cat.split(' ')[0];
+  document.getElementById('catName').textContent = q.cat.substring(q.cat.indexOf(' ') + 1);
+  document.getElementById('qNumBadge').textContent = 'Q ' + (currentQ + 1);
+
+  // Question
+  const qArabic = document.getElementById('qArabic');
+  if (q.arabic) {
+    qArabic.textContent = q.arabic;
+    qArabic.style.display = 'block';
+  } else {
+    qArabic.style.display = 'none';
+  }
+  document.getElementById('qText').textContent = q.q;
+
+  // Choices
+  const grid = document.getElementById('choicesGrid');
+  grid.innerHTML = '';
+  const letters = ['الف', 'ب', 'ج', 'د'];
+  const colors = ['opt-a', 'opt-b', 'opt-c', 'opt-d'];
+
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn ' + colors[i];
+    btn.innerHTML = `<span class="opt-label">${letters[i]}</span><span class="opt-text">${opt}</span>`;
+    btn.onclick = () => chooseAnswer(i, btn);
+    grid.appendChild(btn);
+  });
+
+  // Timer
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 30;
+  updateTimerDisplay();
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timeExpired();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const ring = document.getElementById('timerRing');
+  const num = document.getElementById('timerNum');
+  const circumference = 138;
+  const offset = circumference * (1 - timeLeft / 30);
+  ring.style.strokeDashoffset = offset;
+  num.textContent = timeLeft;
+
+  if (timeLeft <= 10) {
+    ring.style.stroke = '#FF4444';
+    num.style.color = '#FF6060';
+  } else if (timeLeft <= 20) {
+    ring.style.stroke = '#F0B820';
+    num.style.color = '#FFD84A';
+  } else {
+    ring.style.stroke = '#F0B820';
+    num.style.color = '#FFD84A';
+  }
+}
+
+function timeExpired() {
+  if (answered) return;
+  answered = true;
+  streak = 0;
+  wrongCount++;
+  userAnswers.push({ chosen: -1, correct: questions[currentQ].ans });
+  disableChoices();
+  highlightCorrect();
+  showFeedback(false, null, true);
+}
+
+function chooseAnswer(idx, btn) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  const q = questions[currentQ];
+  const isCorrect = idx === q.ans;
+  userAnswers.push({ chosen: idx, correct: q.ans });
+
+  disableChoices();
+
+  if (isCorrect) {
+    const timeBonus = Math.floor(timeLeft * 10);
+    score += 100 + timeBonus;
+    correctCount++;
+    streak++;
+    if (streak > maxStreak) maxStreak = streak;
+    btn.classList.add('correct');
+    showFeedback(true, btn, false);
+  } else {
+    btn.classList.add('wrong');
+    streak = 0;
+    wrongCount++;
+    highlightCorrect();
+    showFeedback(false, btn, false);
+  }
+
+  document.getElementById('hud-score').textContent = score;
+}
+
+function disableChoices() {
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+}
+
+function highlightCorrect() {
+  const correct = questions[currentQ].ans;
+  const btns = document.querySelectorAll('.choice-btn');
+  if (btns[correct]) btns[correct].classList.add('correct');
+}
+
+function showFeedback(correct, btn, timeout) {
+  const q = questions[currentQ];
+  const overlay = document.getElementById('feedbackOverlay');
+  const inner = document.getElementById('feedbackInner');
+  const emoji = document.getElementById('fbEmoji');
+  const title = document.getElementById('fbTitle');
+  const exp = document.getElementById('fbExp');
+  const correctDiv = document.getElementById('fbCorrect');
+
+  if (correct) {
+    inner.className = 'feedback-inner correct-fb';
+    const emojis = ['🎉','✅','🌟','🏆','💯','🎊','✨','👏'];
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    title.className = 'feedback-title ct';
+    title.textContent = streak >= 3 ? `🔥 ${streak} پی‌درپی!` : 'آفرین! درست است!';
+    exp.textContent = q.exp;
+    correctDiv.style.display = 'none';
+  } else {
+    inner.className = 'feedback-inner wrong-fb';
+    emoji.textContent = timeout ? '⏰' : '❌';
+    title.className = 'feedback-title wt';
+    title.textContent = timeout ? 'وقت تمام شد!' : 'اشتباه بود!';
+    exp.textContent = q.exp;
+    correctDiv.style.display = 'block';
+    correctDiv.textContent = '✅ جواب درست: ' + q.opts[q.ans];
+  }
+
+  overlay.classList.add('show');
+}
+
+function nextQuestion() {
+  document.getElementById('feedbackOverlay').classList.remove('show');
+  currentQ++;
+
+  if (currentQ >= 100) {
+    totalTime = Math.floor((Date.now() - startTime) / 1000);
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+// ============================================================
+//  RESULTS
+// ============================================================
+function showResults() {
+  showScreen('screen-results');
+
+  const pct = Math.round((correctCount / 100) * 100);
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('rsCorrect').textContent = correctCount;
+  document.getElementById('rsWrong').textContent = wrongCount;
+  document.getElementById('rsStreak').textContent = maxStreak;
+  document.getElementById('rsTime').textContent = totalTime;
+  document.getElementById('hud-score').textContent = score;
+
+  // Rank
+  let crown, rankTitle, rankDesc;
+  if (pct >= 95) { crown = '🏆'; rankTitle = 'عالم برجسته'; rankDesc = 'ماشاءالله! علم شما فوق‌العاده است!'; }
+  else if (pct >= 85) { crown = '🥇'; rankTitle = 'نخبه اسلامی'; rankDesc = 'احسنت! درک عمیقی از دین دارید.'; }
+  else if (pct >= 75) { crown = '🥈'; rankTitle = 'دانش‌آموز ممتاز'; rankDesc = 'آفرین! تلاش بیشتر شما را به قله می‌رساند.'; }
+  else if (pct >= 60) { crown = '🥉'; rankTitle = 'جوینده علم'; rankDesc = 'خوب است! ادامه دهید و بیشتر مطالعه کنید.'; }
+  else if (pct >= 40) { crown = '📚'; rankTitle = 'مبتدی مجتهد'; rankDesc = 'شروع خوبی دارید! بیشتر مطالعه کنید.'; }
+  else { crown = '🌱'; rankTitle = 'طالب علم'; rankDesc = 'یادگیری آغاز کرده‌اید. هر بار بهتر می‌شوید!'; }
+
+  document.getElementById('resultsCrown').textContent = crown;
+  document.getElementById('rankTitle').textContent = rankTitle;
+  document.getElementById('rankDesc').textContent = rankDesc;
+
+  // Dynamic score circle
+  const circle = document.querySelector('.score-circle');
+  circle.style.background = `conic-gradient(var(--gold3) 0%, var(--green3) ${pct}%, rgba(255,255,255,0.05) ${pct}%)`;
+
+  if (pct >= 80) spawnConfetti();
+}
+
+function showReview() {
+  showScreen('screen-review');
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+
+  questions.slice(0, 100).forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (!ua) return;
+    const isCorrect = ua.chosen === ua.correct;
+    const div = document.createElement('div');
+    div.className = 'review-item ' + (isCorrect ? 'r-correct' : 'r-wrong');
+
+    const letters = ['الف', 'ب', 'ج', 'د'];
+    let optsHTML = '';
+    q.opts.forEach((opt, j) => {
+      let cls = 'rac-neutral';
+      if (j === q.ans) cls = 'rac-correct';
+      else if (j === ua.chosen && !isCorrect) cls = 'rac-wrong';
+      optsHTML += `<span class="review-ans-chip ${cls}">${letters[j]}. ${opt}</span>`;
+    });
+
+    div.innerHTML = `
+      <div class="review-q-bar">
+        <div class="review-num">${i + 1}</div>
+        <div class="review-q-text">${isCorrect ? '✅' : '❌'} ${q.q}</div>
+      </div>
+      <div class="review-ans-row">${optsHTML}</div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function showResults() {
+  showScreen('screen-results');
+
+  const pct = Math.round((correctCount / 100) * 100);
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('rsCorrect').textContent = correctCount;
+  document.getElementById('rsWrong').textContent = wrongCount;
+  document.getElementById('rsStreak').textContent = maxStreak;
+  document.getElementById('rsTime').textContent = Math.floor((Date.now() - startTime) / 1000);
+
+  let crown, rankTitle, rankDesc;
+  if (pct >= 95) { crown = '🏆'; rankTitle = 'عالم برجسته'; rankDesc = 'ماشاءالله! علم شما بی‌نظیر است — جزاک الله خیراً'; }
+  else if (pct >= 85) { crown = '🥇'; rankTitle = 'نخبه اسلامی'; rankDesc = 'احسنت! درک عمیقی از علوم دینی دارید.'; }
+  else if (pct >= 75) { crown = '🥈'; rankTitle = 'دانش‌آموز ممتاز'; rankDesc = 'آفرین! با تلاش بیشتر به قله می‌رسید.'; }
+  else if (pct >= 60) { crown = '🥉'; rankTitle = 'جوینده علم'; rankDesc = 'خوب است! ادامه مطالعه و پیشرفت کنید.'; }
+  else if (pct >= 40) { crown = '📚'; rankTitle = 'مبتدی مجتهد'; rankDesc = 'شروع خوبی است! بیشتر قرآن و سیره بخوانید.'; }
+  else { crown = '🌱'; rankTitle = 'طالب علم'; rankDesc = 'هر سفری با یک قدم شروع می‌شود. ادامه بدهید!'; }
+
+  document.getElementById('resultsCrown').textContent = crown;
+  document.getElementById('rankTitle').textContent = rankTitle;
+  document.getElementById('rankDesc').textContent = rankDesc;
+
+  const circle = document.querySelector('.score-circle');
+  circle.style.background = `conic-gradient(var(--gold3) 0%, var(--green3) ${pct}%, rgba(255,255,255,0.05) ${pct}%)`;
+
+  if (pct >= 75) spawnConfetti();
+}
+
+function restartQuiz() {
+  startQuiz();
+}
+
+// ============================================================
+//  CONFETTI
+// ============================================================
+function spawnConfetti() {
+  const wrap = document.getElementById('confettiWrap');
+  wrap.innerHTML = '';
+  const colors = ['#F0B820','#40C870','#FF6B6B','#4A9FE0','#C070E0','#FFD84A','#FFFFFF'];
+
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-p';
+    p.style.cssText = `
+      left:${Math.random() * 100}%;
+      background:${colors[Math.floor(Math.random() * colors.length)]};
+      width:${Math.random() * 10 + 6}px;
+      height:${Math.random() * 8 + 6}px;
+      border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+      animation-duration:${Math.random() * 2 + 2}s;
+      animation-delay:${Math.random() * 1.5}s;
+    `;
+    wrap.appendChild(p);
+  }
+  setTimeout(() => wrap.innerHTML = '', 5000);
+}
+
+// ============================================================
+//  SHARE / PUBLISH
+// ============================================================
+function handleShare() {
+  const shareData = {
+    title: '🕌 مسابقه بزرگ اسلامی — ۱۰۰ سوال',
+    text: 'مسابقه ۱۰۰ سوال اسلامی پیشرفته\nسیرت پیامبر ﷺ، قرآن کریم، رمضان، احادیث و فقه حنفی\n\nتهیه‌کننده: سید ذکریا مبرم\nmobram@gmail.com',
+    url: window.location.href
+  };
+
+  const msg = document.getElementById('shareMsg');
+  msg.style.display = 'block';
+
+  if (navigator.share) {
+    navigator.share(shareData)
+      .then(() => { msg.textContent = '✅ Shared successfully!'; })
+      .catch(() => copyLink(msg));
+  } else {
+    copyLink(msg);
+  }
+}
+
+function copyLink(msgEl) {
+  const text = window.location.href;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      msgEl.textContent = '📋 Link copied! Paste in WhatsApp / Telegram';
+      msgEl.style.color = '#40C870';
+    }).catch(() => fallbackCopy(text, msgEl));
+  } else {
+    fallbackCopy(text, msgEl);
+  }
+}
+
+function fallbackCopy(text, msgEl) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    msgEl.textContent = '📋 Link copied to clipboard!';
+    msgEl.style.color = '#40C870';
+  } catch(e) {
+    msgEl.textContent = '🔗 Copy this URL: ' + text;
+    msgEl.style.color = '#FFD84A';
+  }
+  document.body.removeChild(ta);
+}
+</script>
+</body>
+</html>
